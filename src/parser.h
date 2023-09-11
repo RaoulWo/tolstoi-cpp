@@ -21,7 +21,7 @@ public:
     CommandLineArguments(std::string bookFilePath, std::string peaceFilePath, std::string warFilePath)
         : book_file_path_(bookFilePath), peace_file_path_(peaceFilePath), war_file_path_(warFilePath) {}
 
-    static std::function<bool(CommandLineArguments)> AreValid;
+    static std::function<bool(const CommandLineArguments&)> AreValid;
 
     inline std::string book_file_path() const { return book_file_path_; }
     inline std::string peace_file_path() const { return peace_file_path_; }

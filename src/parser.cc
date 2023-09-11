@@ -27,7 +27,7 @@ std::function<CommandLineArguments(const int, char* const*)> Parser::Parse = [](
     return CommandLineArguments(bookFilePath, peaceFilePath, warFilePath);
 };
 
-std::function<bool(CommandLineArguments)> CommandLineArguments::AreValid = [](const CommandLineArguments& args) -> bool
+std::function<bool(const CommandLineArguments&)> CommandLineArguments::AreValid = [](const CommandLineArguments& args) -> bool
 {
     return !args.book_file_path().empty() && !args.peace_file_path().empty() && !args.war_file_path().empty();
 };
