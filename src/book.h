@@ -23,6 +23,7 @@ public:
 
     static std::function<std::vector<Chapter>(const std::vector<std::string>&)> Chapterize;
 
+    inline std::vector<Chapter> chapters() const { return chapters_; }
     inline Terms peace() const { return peace_; }
     inline Terms war() const { return war_; }
 

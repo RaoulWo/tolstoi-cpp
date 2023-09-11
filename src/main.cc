@@ -24,7 +24,13 @@ int main(int argc, char** argv)
 
     Tolstoy::Book* book = new Tolstoy::Book(contents);
 
+    int warCount = Tolstoy::Chapter::TermCount(book->chapters()[0], book->war());
+    int peaceCount = Tolstoy::Chapter::TermCount(book->chapters()[0], book->peace());
+    int wordCount = Tolstoy::Chapter::WordCount(book->chapters()[0]);
 
+    std::cout << warCount << "\n";
+    std::cout << peaceCount << "\n";
+    std::cout << wordCount << "\n";
 
     delete book;
 }
