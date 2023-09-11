@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "file_reader.h"
-#include "parser.h"
-#include "terms.h"
+#include "book.h"
 
 int main(int argc, char** argv)
 {
@@ -24,7 +22,9 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    // Trim the whitespace of the peace and war terms.
-    Tolstoy::Terms peace(contents.peace());
-    Tolstoy::Terms war(contents.war());
+    Tolstoy::Book* book = new Tolstoy::Book(contents);
+
+
+
+    delete book;
 }

@@ -19,7 +19,7 @@ std::function<std::string(const Terms&)> Terms::ToString = [](const Terms& terms
 
 Terms::Terms(const std::vector<std::string>& lines)
 {
-    std::transform(lines.begin(), lines.end(), std::back_inserter(tokens_), trim);
+    std::transform(lines.begin(), lines.end(), std::back_inserter(tokens_), Utils::Trim);
 }
 
 std::ostream& operator<< (std::ostream& stream, const Terms& terms)
