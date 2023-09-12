@@ -3,7 +3,6 @@
 
 #include "file_reader.h"
 #include "chapter.h"
-#include "terms.h"
 
 #include <functional>
 #include <string>

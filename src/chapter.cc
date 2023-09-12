@@ -43,41 +43,36 @@ std::function<std::vector<std::string>(const std::string&)> Chapter::TokenizeLin
     return result;
 };
 
-std::function <std::vector<std::string>(const Chapter&, const Terms&)> Chapter::FilterByTerms = [](const Chapter& chapter, const Terms& terms)
+std::function <std::vector<Token>(const Chapter&, const Terms&)> Chapter::FilterByTerms = [](const Chapter& chapter, const Terms& terms)
 {
-    std::vector<std::string> result;
-    std::vector<std::string> chapterTokens = chapter.tokens(), termsTokens = terms.tokens();
+    std::vector<Token> result;
+    std::vector<Token> chapterTokens = chapter.tokens();
+    std::vector<std::string> termStrings = terms.tokens();
 
-    std::copy_if(chapterTokens.begin(), chapterTokens.end(), std::back_inserter(result), [&](const std::string& token) {
-        return std::any_of(termsTokens.begin(), termsTokens.end(), [&](const std::string& t) {
-            return t == token;
+    std::copy_if(chapterTokens.begin(), chapterTokens.end(), std::back_inserter(result), [&](const Token& token) {
+        return std::any_of(termStrings.begin(), termStrings.end(), [&](const std::string& t) {
+            return t == token.content();
         });
     });
 
     return result;
 };
 
-
 std::function<int(const Chapter&)> Chapter::WordCount = [](const Chapter& chapter)
 {
     return chapter.tokens().size();
 };
 
-std::function<int(const Chapter&, const Terms&)> Chapter::TermCount = [](const Chapter& chapter, const Terms& terms)
-{
-    return Chapter::FilterByTerms(chapter, terms).size();
-};
-
 Chapter::Chapter(const std::vector<std::string>& lines)
 {
     // Tokenize the lines.
-    tokens_ = Chapter::Tokenize(lines);
-
+    auto tokenStrings = Chapter::Tokenize(lines);
     // Strip invalid beginning and trailing characters.
-    tokens_ = Utils::Strip(tokens_);
-
+    tokenStrings = Utils::Strip(tokenStrings);
     // Filter only the non-whitespace tokens.
-    tokens_ = Utils::FilterNonWhiteSpaceStrings(tokens_);
+    tokenStrings = Utils::FilterNonWhiteSpaceStrings(tokenStrings);
+    // Transform the token strings into token objects.
+    tokens_ = Token::ToTokens(tokenStrings);
 }
 
 } // Tolstoy

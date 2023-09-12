@@ -2,6 +2,7 @@
 #define TOLSTOY_SRC_CHAPTER_H_
 
 #include "terms.h"
+#include "token.h"
 
 #include <functional>
 #include <string>
@@ -18,15 +19,14 @@ public:
     static std::function<std::vector<std::string>(const std::vector<std::string>&)> Tokenize;
     static std::function<std::vector<std::string>(const std::string&)> TokenizeLine;
 
-    static std::function <std::vector<std::string>(const Chapter&, const Terms&)> FilterByTerms;
+    static std::function <std::vector<Token>(const Chapter&, const Terms&)> FilterByTerms;
 
     static std::function<int(const Chapter&)> WordCount;
-    static std::function<int(const Chapter&, const Terms&)> TermCount;
 
-    inline std::vector<std::string> tokens() const { return tokens_; }
+    inline std::vector<Token> tokens() const { return tokens_; }
 
 private:
-    std::vector<std::string> tokens_;
+    std::vector<Token> tokens_;
 };
 
 } // Tolstoy
