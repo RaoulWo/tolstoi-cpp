@@ -1,7 +1,6 @@
-#include <iostream>
-
 #include "book.h"
 
+#include <iostream>
 #include <memory>
 
 // TODO Extract chapter lambdas into chapter static std::functions
@@ -43,14 +42,29 @@ const auto book_war_count = [](const Tolstoy::Book& book)
     return result;
 };
 
+// NEAREST NEIGHBOUR DISTANCE
+const auto sum_nearest_neighbour_distance = [](const std::vector<Tolstoy::Token>& tokens)
+{
+    if (tokens.size() <= 1) return 1;
+
+    int sumDistance = 0;
+    for (long unsigned int i = 0; i < tokens.size() - 1; i++)
+    {
+        sumDistance += (tokens[i + 1].index() - tokens[i].index());
+    }
+
+    return sumDistance;
+};
+
 // TERM DENSITY
 const auto chapter_term_density = [](const Tolstoy::Chapter& chapter, const Tolstoy::Terms& terms)
 {
-    float term_count = chapter_term_count(chapter, terms);
+    std::vector<Tolstoy::Token> tokens = Tolstoy::Chapter::FilterByTerms(chapter, terms);
 
-    // TODO Implement the term density calculation
+    int sumDistance = sum_nearest_neighbour_distance(tokens);
+    int term_count = chapter_term_count(chapter, terms);
 
-    return term_count;
+    return sumDistance * term_count;
 };
 const auto book_peace_density = [](const Tolstoy::Book& book)
 {
@@ -126,9 +140,9 @@ int main(int argc, char** argv)
     }
 
     std::shared_ptr<Tolstoy::Book> book = std::make_shared<Tolstoy::Book>(*contents);
-    std::vector<std::string> comparison = book_density_comparison(*book);
+    std::shared_ptr<std::vector<std::string>> comparison = std::make_shared<std::vector<std::string>>(book_density_comparison(*book));
 
-    for (const auto& s : comparison)
+    for (const auto& s : (*comparison))
     {
         std::cout << s << '\n';
     }
