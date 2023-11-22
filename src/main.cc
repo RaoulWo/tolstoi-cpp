@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <memory>
+#include <utility>
 
 // TODO Extract chapter lambdas into chapter static std::functions
 // TODO Extract book lambdas into book static std::functions
